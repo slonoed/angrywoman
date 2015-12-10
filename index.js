@@ -1,6 +1,10 @@
 (function() {
   function Angrywoman(options) {
     this.url = options.url;
+    if (this.url[this.url.length - 1] !== '/') {
+      this.url += '/';
+    }
+
     this.project = options.project;
     this.debug = options.debug;
   };
@@ -24,9 +28,20 @@
 
     if (req.readyState == 4) return;
 
+    if (Object.prototype.toString.call(meta) == '[object String]') {
+      meta = {
+        label: meta
+      };
+    }
+
+    // Check meta can be serialized
+    try { JSON.stringify(meta) }
+    catch (e) { meta = { metaError: 'Meta can\'t be serialized' }; }
+
     var postData = JSON.stringify({
       throwableProxyStackTrace: e.stack.split('\n'),
-      message: e.toString()
+      message: e.toString(),
+      meta: meta
     });
     req.send(postData);
   };
