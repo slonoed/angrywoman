@@ -34,14 +34,19 @@
       };
     }
 
+    meta.errorMessage = e.toString();
+
+
     // Check meta can be serialized
     try { JSON.stringify(meta) }
     catch (e) { meta = { metaError: 'Meta can\'t be serialized' }; }
-
+    var stack = e.stack.split('\n');
     var postData = JSON.stringify({
-      throwableProxyStackTrace: e.stack.split('\n'),
-      message: e.toString(),
-      meta: meta
+      throwableProxyStackTrace: stack,
+      stFile: stack[1],
+      message: meta.label || meta.errorMessage,
+      meta: meta,
+      timestamp: Date.now()
     });
     req.send(postData);
   };
