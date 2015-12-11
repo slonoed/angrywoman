@@ -1,4 +1,13 @@
 (function() {
+  function merge(obj1, obj2){
+    var obj3 = {};
+    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+    return obj3;
+  }
+
+  //////
+
   function Angrywoman(options) {
     this.url = options.url;
     if (this.url[this.url.length - 1] !== '/') {
@@ -7,6 +16,7 @@
 
     this.project = options.project;
     this.debug = options.debug;
+    this.meta = options.meta || {};
   };
 
   // Send exception to Angryman
@@ -36,6 +46,7 @@
 
     meta.errorMessage = e.toString();
 
+    meta = merge(this.meta, meta);
 
     // Check meta can be serialized
     try { JSON.stringify(meta) }

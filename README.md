@@ -11,7 +11,10 @@ npm install --save angrywoman
 var Angrywoman = require('angrywoman')
 var angrywoman = new Angrywoman({
   url: 'http://angryman-server.com/',
-  project: 'my-project'
+  project: 'my-project',
+  meta: {
+    // Data merged into each shout  
+  }
 }); 
 
 try {
