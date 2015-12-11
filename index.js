@@ -54,7 +54,7 @@
     var stack = e.stack.split('\n');
     var postData = JSON.stringify({
       throwableProxyStackTrace: stack,
-      stFile: stack[1],
+      stFile: meta.label || meta.errorMessage,
       message: meta.label || meta.errorMessage,
       meta: meta,
       timestamp: Date.now()
